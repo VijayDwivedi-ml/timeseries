@@ -12,7 +12,7 @@ con.close()
 st.title('Product Identification based on Reactant based of Chemical Reaction')
 st.sidebar.title('Chemistry Project by Vedang Dwivedi, XII')
 image = Image.open('https://github.com/VijayDwivedi-ml/timeseries/blob/main/vedang_pic_final.JPG')
-st.sidebar.image('image', width = 100)
+#st.sidebar.image('image', width = 100)
 
 select1 = st.sidebar.selectbox('Reactant Selection', ['Alkyne','Alkene','Alkanes','Alcohol','Alcohol(Secondary)','Aldehyde','Ketone','Carboxylic Acid','Ether','Amine', ' '])
 st.write('You Selected Reactant:', select1)
