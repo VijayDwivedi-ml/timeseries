@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import sqlite3
+from PIL import Image
 
 #Create a SQL connection to our SQLite database
 con = sqlite3.connect("chemistry.db")
@@ -10,7 +11,8 @@ con.close()
 
 st.title('Product Identification based on Reactant based of Chemical Reaction')
 st.sidebar.title('Chemistry Project by Vedang Dwivedi, XII')
-st.sidebar.image(https://github.com/VijayDwivedi-ml/timeseries/blob/main/vedang_pic_final.JPG, width = 100)
+image = Image.open('https://github.com/VijayDwivedi-ml/timeseries/blob/main/vedang_pic_final.JPG')
+st.sidebar.image(image, width = 100)
 
 select1 = st.sidebar.selectbox('Reactant Selection', ['Alkyne','Alkene','Alkanes','Alcohol','Alcohol(Secondary)','Aldehyde','Ketone','Carboxylic Acid','Ether','Amine', ' '])
 st.write('You Selected Reactant:', select1)
