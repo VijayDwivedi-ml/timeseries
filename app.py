@@ -1,66 +1,55 @@
-#import warnings
-#warnings.filterwarnings('ignore')  # Hide warnings
-import datetime as dt
 import streamlit as st
+from PIL import Image
+import requests
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-#import seaborn as sns
-#from PIL import Image
-import os
-from ta.volatility import BollingerBands
-from ta.trend import MACD
-from ta.momentum import RSIIndicator
+import sqlite3
 
-##################
-# Set up sidebar #
-##################
+# Weather data for any city
 
-# Add in location to select image.
+def find_current_weather(city):
+    API_KEY = "642b399f532d6a45a46c3a8c83d0a18e"
+    base_url  = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+    weather_data = requests.get(base_url).json()
+#   st.json(weather_data)
+    lat = weather_data['coord']['lat']
+    lon = weather_data['coord']['lon']
+    base_url2 = f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API_KEY}"
+    weather_data2 = requests.get(base_url2).json()
+#    st.json(weather_data2)
+    
+    try:
+        general = weather_data['weather'][0]['main']
+        icon_id = weather_data['weather'][0]['icon']
+        temperature = round(weather_data['main']['temp'])
+        humidity = round(weather_data['main']['humidity'])
+        icon = f"http://openweathermap.org/img/wn/{icon_id}@2x.png"
+     #   lat = weather_data['coord']['lat']
+     #   lon = weather_data['coord']['lon']
+        aqi = weather_data2['list'][0]['main']['aqi']
+        AQI = 0
+        if aqi == 1:
+            AQI = 'Good'
+        elif aqi == 2:
+            AQI = 'Fair'
+        elif aqi == 3:
+            AQI = 'Moderate'
+        elif aqi == 4:
+            AQI = 'Poor'
+        elif aqi == 5:
+            AQI = 'Very Poor'
+            
+        
+    except KeyError:
+        st.error("City Not Found")
+        st.stop()
+    return general,temperature, humidity, icon, AQI
+    
+#Create a SQL connection to our SQLite database
 
-option = st.sidebar.selectbox('symbol', ('ONMOBILE', 'GATI'))
-
-st.write((option))
-
-
-##############
-# Stock data #
-##############
-
-
-df = pd.read_csv('ONMOBILE.csv')
-
-df.reset_index(inplace=True)
-df.set_index("Date", inplace=True)
-
-indicator_bb = BollingerBands(df['Close'])
-
-bb = df
-bb['bb_h'] = indicator_bb.bollinger_hband()
-bb['bb_l'] = indicator_bb.bollinger_lband()
-bb = bb[['Close','bb_h','bb_l']]
-
-macd = MACD(df['Close']).macd()
-
-rsi = RSIIndicator(df['Close']).rsi()
-
-
-###################
-# Set up main app #
-###################
-n=100
-st.write('Stock Bollinger Bands')
-
-st.line_chart(bb.tail(n))
-
-progress_bar = st.progress(0)
-
-st.write('Stock Moving Average Convergence Divergence (MACD)')
-st.area_chart(macd.tail(n))
-
-st.write('Stock RSI ')
-st.line_chart(rsi.tail(n))
-
-
-st.write('Recent data ')
-st.dataframe(df.tail(n))
+@st.cache(persist = True)
+def DataBase():
+    con = sqlite3.connect("asthmadb.db")
+    df = pd.read_sql_query('select * from Asthma_Data_File', con)
+    con.close()
+    return df
