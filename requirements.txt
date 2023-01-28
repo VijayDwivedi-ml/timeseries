@@ -1,11 +1,3 @@
 streamlit
 numpy
 pandas
-plotly_express
-plotnine
-scipy
-pingouin
-statistics
-requests
-sqlite3
-Image
