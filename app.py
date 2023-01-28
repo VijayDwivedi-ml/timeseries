@@ -28,7 +28,7 @@ st.write((option))
 ##############
 
 
-df = pd.read_csv('data/ONMOBILE.csv')
+df = pd.read_csv('ONMOBILE.csv')
 
 df.reset_index(inplace=True)
 df.set_index("Date", inplace=True)
