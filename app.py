@@ -4,7 +4,7 @@ import numpy as np
 import sqlite3
 #from PIL import Image
 import requests
-#from MyFunction import * 
+from MyFunction import * 
 
 # Web page basic configuration
 st.set_page_config(
