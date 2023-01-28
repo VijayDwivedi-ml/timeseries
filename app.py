@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import sqlite3
+#import sqlite3
 #from PIL import Image
 import requests
 from MyFunction import * 
