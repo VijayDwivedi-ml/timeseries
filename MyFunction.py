@@ -44,7 +44,3 @@ def find_current_weather(city):
         st.error("City Not Found")
         st.stop()
     return general,temperature, humidity, icon, AQI
-    
-#Create a SQL connection to our SQLite database
-
-@st.cache(persist = True)
