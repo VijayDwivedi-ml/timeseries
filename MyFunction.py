@@ -48,8 +48,3 @@ def find_current_weather(city):
 #Create a SQL connection to our SQLite database
 
 @st.cache(persist = True)
-def DataBase():
-    con = sqlite3.connect("asthmadb.db")
-    df = pd.read_sql_query('select * from Asthma_Data_File', con)
-    con.close()
-    return df
