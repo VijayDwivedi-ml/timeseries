@@ -8,7 +8,7 @@ from MyFunction import *
 
 # Web page basic configuration
 st.set_page_config(
-    page_title="Prostrate Cancer Detection - GENAI Approach",
+    page_title="Weather details around the World",
     page_icon="⚕️",
     layout="wide",
     initial_sidebar_state="expanded"
