@@ -24,7 +24,7 @@ st.set_page_config(
 
 # Main page basic details
 
-st.title("Prostrate Cancer Detection - GENAI Approach 📱️")
+st.title("Weather details around the World 📱️")
 st.sidebar.title('Please Provide Details')
 
 select1 = st.sidebar.selectbox(' 🧒 👨 👴', ['19-30','31-40', '41-50', 'Above 50'])
